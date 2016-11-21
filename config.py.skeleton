@@ -1,0 +1,12 @@
+import os
+basedir = os.path.dirname(__file__)
+
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'electron.db')
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+SECURITY_PASSWORD_HASH = 'sha512_crypt'
+SECURITY_PASSWORD_SALT = 'salt'
+
+SECRET_KEY = 'ADD A SECRET KEY HERE'
+
+

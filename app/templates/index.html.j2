@@ -1,0 +1,25 @@
+{% include 'header.html.j2' %}
+<div class="row">
+    <h3>{{ path }}</h3>
+</div>
+
+<div class="row">
+    <h3>Directories</h3>
+    <table class="table table-condensed table-hover">
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>Description</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for d in directories %}
+        <tr>
+            <td><a href="{{ url_for('browse_path', name=d.name) }}">{{ d.name }}</a></td>
+            <td>{{ d.description }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+{% include 'footer.html.j2' %}

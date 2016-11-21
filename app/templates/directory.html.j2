@@ -1,0 +1,28 @@
+{% include 'header.html.j2' %}
+<div class="row">
+    <h3>{{ path }}</h3>
+    <p>{{ description }}</p>
+</div>
+
+<div class="row">
+    <h3>Files</h3>
+    <table class="table table-condensed table-hover">
+    <thead>
+        <tr>
+            <td>Filename</td>
+            <td align="right">Size</td>
+            <td align="right">Modified</td>
+        </tr>
+    </thead>
+    <tbody>
+    {% for f in files %}
+        <tr>
+            <td><a href="{{ url_for('download', name=f.path) }}">{{ f.name }}</a></td>
+            <td align="right">{{ f.size|filesizeformat }}</td>
+            <td align="right">{{ f.mtime|datetime }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+{% include 'footer.html.j2' %}

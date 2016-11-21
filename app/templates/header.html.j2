@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1><a href="{{ url_for('index') }}">barbaric electron</a></h1>
+    </div>
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %}
+    {% for (category, message) in messages %}
+        <div class="alert alert-{{category}} alert-dismissable" role="alert">
+            {{message}}
+            <button type="button" class="close" data-dismiss="alert">
+                <span class="glyphicon glyphicon-remove"></span>
+                <span class="sr-only">Close</span>
+            </button>
+        </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
