@@ -26,10 +26,25 @@
 
 </head>
 <body>
-<div class="container">
-    <div class="page-header">
-        <h1>barbaric electron</h1>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url_for('index') }}">barbaric electron</a>
+        </div>
+        <div class="navbar-right">
+        {% if not current_user.is_authenticated %}
+        <a role="button" class="btn btn-default navbar-left navbar-btn"
+        href="{{ url_for("security.login") }}">Login</a>
+            {% else %}
+            <p class="navbar-text"><a href="{{ url_for("user_me") }}">{{ current_user.email }}</a></p>
+            <a role="button" class="btn btn-default navbar-left navbar-btn"
+        href="{{ url_for("security.logout") }}">Logout</a>
+        {% endif %}
+        </div>
     </div>
+
+</nav>
+<div class="container">
 {% with messages = get_flashed_messages(with_categories=True) %}
 {% if messages %}
     {% for (category, message) in messages %}
