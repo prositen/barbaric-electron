@@ -9,19 +9,19 @@
     <thead>
         <tr>
             <th>Filename</th>
-            <th class="text-right">Size</th>
-            <th class="text-right">Modified</th>
+            <th>Size</th>
+            <th>Modified</th>
         </tr>
     </thead>
     <tbody>
         <tr class="static" data-row-index="0">
-            <td><a href="{{ url_for('index') }}">..</a></td><td></td><td></td>
+            <td><a style="display: block" href="{{ url_for('index') }}">..</a></td><td></td><td></td>
         </tr>
     {% for f in files %}
         <tr>
-            <td><a href="{{ url_for('download', name=f.path) }}">{{ f.name }}</a></td>
-            <td data-sort-value="{{ f.size }}" class="text-right">{{ f.size|filesizeformat }}</td>
-            <td class="text-right">{{ f.mtime|datetime }}</td>
+            <td><a style="display:block" href="{{ url_for('download', name=f.path) }}">{{ f.name }}</a></td>
+            <td data-sort-value="{{ f.size }}" >{{ f.size|filesizeformat }}</td>
+            <td >{{ f.mtime|datetime }}</td>
         </tr>
     {% endfor %}
     </tbody>
