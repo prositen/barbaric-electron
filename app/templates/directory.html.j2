@@ -5,24 +5,46 @@
 </div>
 
 <div class="row">
-    <h3>Files</h3>
-    <table class="table table-condensed table-hover">
+    <table class="table-condensed table-hover" id="table_files">
     <thead>
         <tr>
-            <td>Filename</td>
-            <td align="right">Size</td>
-            <td align="right">Modified</td>
+            <th>Filename</th>
+            <th>Size</th>
+            <th>Modified</th>
         </tr>
     </thead>
     <tbody>
+        <tr class="static" data-row-index="0">
+            <td><a style="display: block" href="{{ url_for('index') }}">..</a></td><td></td><td></td>
+        </tr>
     {% for f in files %}
         <tr>
-            <td><a href="{{ url_for('download', name=f.path) }}">{{ f.name }}</a></td>
-            <td align="right">{{ f.size|filesizeformat }}</td>
-            <td align="right">{{ f.mtime|datetime }}</td>
+            <td><a style="display:block" href="{{ url_for('download', name=f.path) }}">{{ f.name }}</a></td>
+            <td data-sort-value="{{ f.size }}" >{{ f.size|filesizeformat }}</td>
+            <td >{{ f.mtime|datetime }}</td>
         </tr>
     {% endfor %}
     </tbody>
     </table>
 </div>
+<style>
+        .tablesorter-icon {
+            position: relative !important
+        }
+    </style>
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $.tablesorter.themes.bootstrap.table = 'table table-hover table-condensed';
+        $.tablesorter.themes.bootstrap.header = '';
+
+        $("#table_files").tablesorter({
+            theme : "bootstrap",
+            widgets : [ "uitheme", "staticRow" ], // , "filter", "zebra" ],
+            headerTemplate : '{icon} {content}  ',
+            sortList: [[0,0]],
+        });
+    }
+);
+</script>
 {% include 'footer.html.j2' %}

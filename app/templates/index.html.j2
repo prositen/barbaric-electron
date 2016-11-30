@@ -5,7 +5,7 @@
 
 <div class="row">
     <h3>Directories</h3>
-    <table class="table table-condensed table-hover">
+    <table class="table table-condensed table-hover" id="table_directories">
     <thead>
     <tr>
         <td>Name</td>
@@ -15,11 +15,30 @@
     <tbody>
     {% for d in directories %}
         <tr>
-            <td><a href="{{ url_for('browse_path', name=d.name) }}">{{ d.name }}</a></td>
+            <td><a href="{{ url_for('browse_path', name=d.name) }}"><span class="glyphicon glyphicon-folder-close"></span> &nbsp; {{ d.name }}</a></td>
             <td>{{ d.description }}</td>
         </tr>
     {% endfor %}
     </tbody>
     </table>
 </div>
+<style>
+        .tablesorter-icon {
+            position: relative !important
+        }
+    </style>
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $.tablesorter.themes.bootstrap.table = 'table table-hover table-condensed';
+        $.tablesorter.themes.bootstrap.header = '';
+        $("#table_directories").tablesorter({
+            theme : "bootstrap",
+            widgets : [ "uitheme" ], // , "filter", "zebra" ],
+            headerTemplate : '{icon} {content}',
+            sortList: [[0,0]],
+        });
+    }
+);
+</script>
 {% include 'footer.html.j2' %}
