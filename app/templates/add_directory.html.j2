@@ -1,0 +1,13 @@
+{% include 'header.html.j2' %}
+{% from "_macros.html" import render_field_with_errors, render_field, render_field_with_label %}
+
+<h2>Add directory</h2>
+<form method="POST" action="{{ url_for('admin_directory_add') }}" class="form-horizontal">
+    {{ form.hidden_tag() }}
+
+    {{ render_field_with_label(form.name, label="Display name", class='form-control', value=form.value|safe) }}
+    {{ render_field_with_label(form.path, label="Filesystem path", class='form-control', value=form.value|safe) }}
+    {{ render_field_with_label(form.description, class='form-control', value=form.value|safe) }}
+     <button type="submit" class="btn btn-default">Submit</button>
+</form>
+{% include 'footer.html.j2' %}

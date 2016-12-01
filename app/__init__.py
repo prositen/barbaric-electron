@@ -1,5 +1,4 @@
 import os
-import mimetypes
 from flask import Flask
 from flask_jsglue import JSGlue
 from flask_login import LoginManager
@@ -19,7 +18,6 @@ jsglue = JSGlue(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 db = SQLAlchemy(app)
-mimetypes.init()
 
 
 from app.models.user import User, Role
@@ -31,3 +29,4 @@ from app.models.audit import Entry
 
 from app.routes.user import *
 from app.routes.browse import *
+from app.routes.admin import *
