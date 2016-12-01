@@ -56,17 +56,26 @@ def admin_show_directory_edit(name):
 def admin_directory_edit():
     directory_id = request.form.get('directory_id')
     directory = Directory.query.get(directory_id)
+    old_path = directory.path
+    old_name = directory.name
+    old_description = directory.description
+
     if not directory:
         raise NotFound
     form = DirectoryForm(obj=directory)
     form.populate_obj(directory)
     if form.validate_on_submit():
-            entry = Entry(user_id=current_user.id, ip=int(ip_address(request.remote_addr)),
-                          message="Edited directory {0}, {1}, {2}, {3}".format(directory.id, directory.path, directory.name, directory.description))
-            db.session.add(entry)
-            db.session.commit()
-            flash(u"Directory added", 'success')
-            return redirect(url_for('index'))
+        message = Entry.make_diff_message({"File system path": (old_path, directory.path),
+                                           "Display name": (old_name, directory.name),
+                                           "Description": (old_description, directory.description)})
+        entry = Entry(user_id=current_user.id,
+                      ip=int(ip_address(request.remote_addr)),
+                      message="Edited directory {0}, {1}".format(directory_id, message))
+
+        db.session.add(entry)
+        db.session.commit()
+        flash(u"Directory added", 'success')
+        return redirect(url_for('index'))
     else:
         for field, errors in form.errors.items():
             for error in errors:
