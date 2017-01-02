@@ -9,19 +9,26 @@
     <thead>
         <tr>
             <th>Filename</th>
+            <th>Description</th>
             <th class="text-right">Size</th>
             <th class="text-right">Modified</th>
+            {% if current_user.has_role('Admin') %}
+            <th></th> {% endif %}
         </tr>
     </thead>
     <tbody>
         <tr class="static" data-row-index="0">
-            <td><a href="{{ url_for('index') }}">..</a></td><td></td><td></td>
+            <td><a href="{{ url_for('index') }}">..</a></td><td></td><td></td><td></td>
         </tr>
     {% for f in files %}
         <tr>
             <td><a href="{{ url_for('download', name=f.path) }}">{{ f.name }}</a></td>
+            <td>{{ f.description }}</td>
             <td data-sort-value="{{ f.size }}" class="text-right">{{ f.size|filesizeformat }}</td>
             <td class="text-right">{{ f.mtime|datetime }}</td>
+            {% if current_user.has_role('Admin') %}
+            <td><a href="{{ url_for('admin_show_file_edit', name=f.path) }}">Edit</a></td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>

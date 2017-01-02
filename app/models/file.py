@@ -8,6 +8,23 @@ class File(db.Model):
     description = db.Column(db.Text())
     directory_id = db.Column(db.Integer, db.ForeignKey('directory.id'))
 
+    @staticmethod
+    def get_by_directory_and_name(directory, name):
+        return File.query.filter_by(directory_id=directory.id, name=name).first()
+
+    @staticmethod
+    def get_file_info(directory, file_handle):
+        s = file_handle.stat()
+        db_object = File.get_by_directory_and_name(directory, file_handle.name)
+        file = {'name': file_handle.name,
+                'path': directory.name + '/' + file_handle.name,
+                'size': s.st_size,
+                'mtime': s.st_mtime,
+                'description': ''}
+        if db_object:
+            file['description'] = db_object.description
+        return file
+
 
 class Directory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -24,3 +41,8 @@ class Directory(db.Model):
 class DirectoryForm(ModelForm):
     class Meta:
         model = Directory
+
+
+class FileForm(ModelForm):
+    class Meta:
+        model = File

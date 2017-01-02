@@ -4,6 +4,7 @@ from flask import send_from_directory
 from werkzeug.exceptions import NotFound
 
 from app import Directory
+from app import File
 from app import app
 
 
@@ -24,11 +25,7 @@ def browse_path(name):
         p = Path(directory.path)
         for f in p.iterdir():
             if f.is_file():
-                s = f.stat()
-                files.append({'name': f.name,
-                              'path': name + '/' + f.name,
-                              'size': s.st_size,
-                              'mtime': s.st_mtime})
+                files.append(File.get_file_info(directory, f))
         return render_template('directory.html.j2',
                                path=name, description=directory.description,
                                files=files)
