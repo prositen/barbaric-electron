@@ -18,7 +18,7 @@
     </thead>
     <tbody>
         <tr class="static" data-row-index="0">
-            <td><a href="{{ url_for('index') }}">..</a></td><td></td><td></td><td></td>
+            <td><a href="{{ url_for('index') }}">..</a></td><td></td><td></td><td></td>{% if current_user.has_role('Admin') %}<td></td>{% endif %}
         </tr>
     {% for f in files %}
         <tr>
