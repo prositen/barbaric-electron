@@ -1,4 +1,5 @@
 # barbaric-electron
+File server with audit logging.
 
 ## Setup
 
